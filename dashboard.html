@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ushuru Investment Co-operative - Members Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --maroon: #7A1F23;
+            --gold: #F5B800;
+            --brown-gray: #6C3F33;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, var(--maroon), #5a1519);
+            color: var(--white);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--maroon);
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            padding: 20px 0;
+        }
+
+        .nav-links li {
+            list-style: none;
+            padding: 12px 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-links li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links li.active {
+            background-color: var(--gold);
+            color: var(--maroon);
+            border-left: 4px solid var(--gold);
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links li.active a {
+            color: var(--maroon);
+            font-weight: bold;
+        }
+
+        .nav-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header h1 {
+            color: var(--maroon);
+            font-size: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--maroon);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .notification-icon {
+            position: relative;
+            font-size: 20px;
+            color: var(--maroon);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--gold);
+            color: var(--maroon);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            color: var(--maroon);
+            font-weight: 600;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(122, 31, 35, 0.1);
+            color: var(--maroon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+
+        .card-footer {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Charts and Tables */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card, .summary-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .chart-title, .summary-title {
+            font-size: 18px;
+            color: var(--maroon);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .summary-list {
+            list-style: none;
+        }
+
+        .summary-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .summary-list li:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #666;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--maroon);
+        }
+
+        /* Recent Activity */
+        .activity-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .activity-title {
+            font-size: 18px;
+            color: var(--maroon);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 15px;
+        }
+
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(245, 184, 0, 0.1);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-description {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .login-left {
+            flex: 1;
+            background: linear-gradient(to bottom right, var(--maroon), #5a1519);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            padding: 40px;
+        }
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .login-logo-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--maroon);
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .login-logo-text {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .login-logo-text span {
+            color: var(--gold);
+        }
+
+        .login-tagline {
+            font-size: 18px;
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .login-features {
+            max-width: 500px;
+        }
+
+        .login-feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .login-feature i {
+            color: var(--gold);
+            font-size: 20px;
+        }
+
+        .login-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-title {
+            font-size: 28px;
+            color: var(--maroon);
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--maroon);
+            outline: none;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .forgot-password {
+            color: var(--maroon);
+            text-decoration: none;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--maroon);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #5a1519;
+        }
+
+        .btn-secondary {
+            background-color: var(--gold);
+            color: var(--maroon);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0a800;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .form-footer a {
+            color: var(--maroon);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar .logo-text, .sidebar .nav-text {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .login-left {
+                padding: 30px 20px;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-icon">U</div>
+                <div class="logo-text">USHURU <span>INVESTMENT</span></div>
+            </div>
+        </div>
+        
+        <ul class="nav-links">
+            <li class="active">
+                <a href="dashboard.html">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="profile.html">
+                    <i class="fas fa-user"></i>
+                    <span class="nav-text">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="contributions.html">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span class="nav-text">Contributions</span>
+                </a>
+            </li>
+            <li>
+                <a href="investments.html">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="nav-text">Investments</span>
+                </a>
+            </li>
+            <li>
+                <a href="refunds.html">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span class="nav-text">Refunds</span>
+                </a>
+            </li>
+            <li>
+                <a href="communication.html">
+                    <i class="fas fa-comments"></i>
+                    <span class="nav-text">Communication</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="login.html">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Member Dashboard</h1>
+            <div class="user-info">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="user-avatar">JM</div>
+                <span>John Member</span>
+            </div>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Total Contributions</div>
+                    <div class="card-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div>
+                <div class="card-value">KSh 245,680</div>
+                <div class="card-footer">Last updated: Today</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Active Investments</div>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+                <div class="card-value">3</div>
+                <div class="card-footer">2 plots, 1 unit trust</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Next Payment Due</div>
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                </div>
+                <div class="card-value">KSh 15,000</div>
+                <div class="card-footer">Due: 15th Oct 2023</div>
+            </div>
+        </div>
+
+        <!-- Charts and Summary -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <div class="chart-title">Contribution History</div>
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-bar" style="font-size: 48px; margin-right: 10px;"></i>
+                    Contribution Chart Visualization
+                </div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="summary-title">Account Summary</div>
+                <ul class="summary-list">
+                    <li>
+                        <span class="summary-label">Shares Balance</span>
+                        <span class="summary-value">KSh 120,000</span>
+                    </li>
+                    <li>
+                        <span class="summary-label">Deposits</span>
+                        <span class="summary-value">KSh 85,000</span>
+                    </li>
+                    <li>
+                        <span class="summary-label">Savings</span>
+                        <span class="summary-value">KSh 40,680</span>
+                    </li>
+                    <li>
+                        <span class="summary-label">Dividends YTD</span>
+                        <span class="summary-value">KSh 12,450</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-card">
+            <div class="activity-title">Recent Activity</div>
+            <ul class="activity-list">
+                <li>
+                    <div class="activity-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-description">Monthly contribution payment</div>
+                        <div class="activity-time">Today, 10:30 AM</div>
+                    </div>
+                    <div class="activity-amount">KSh 10,000</div>
+                </li>
+                <li>
+                    <div class="activity-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-description">Investment application submitted</div>
+                        <div class="activity-time">Yesterday, 2:15 PM</div>
+                    </div>
+                    <div class="activity-amount">Plot #245</div>
+                </li>
+                <li>
+                    <div class="activity-icon">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-description">New message from admin</div>
+                        <div class="activity-time">Oct 5, 2023</div>
+                    </div>
+                    <div class="activity-amount"></div>
+                </li>
+                <li>
+                    <div class="activity-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-description">Statement downloaded</div>
+                        <div class="activity-time">Oct 1, 2023</div>
+                    </div>
+                    <div class="activity-amount">Q3 2023</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Simple script for sidebar navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-links li');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    navItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ushuru Investment Co-operative - Refunds</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --maroon: #7A1F23;
+            --gold: #F5B800;
+            --brown-gray: #6C3F33;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles - Same as previous pages */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, var(--maroon), #5a1519);
+            color: var(--white);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--maroon);
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            padding: 20px 0;
+        }
+
+        .nav-links li {
+            list-style: none;
+            padding: 12px 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-links li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links li.active {
+            background-color: var(--gold);
+            color: var(--maroon);
+            border-left: 4px solid var(--gold);
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links li.active a {
+            color: var(--maroon);
+            font-weight: bold;
+        }
+
+        .nav-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header h1 {
+            color: var(--maroon);
+            font-size: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--maroon);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .notification-icon {
+            position: relative;
+            font-size: 20px;
+            color: var(--maroon);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--gold);
+            color: var(--maroon);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Refunds Content Styles */
+        .refunds-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .refund-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            color: var(--maroon);
+            font-weight: 600;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(122, 31, 35, 0.1);
+            color: var(--maroon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .balance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .balance-item {
+            text-align: center;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+
+        .balance-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .balance-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--maroon);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(122, 31, 35, 0.1);
+            color: var(--maroon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+        }
+
+        .action-title {
+            font-weight: 600;
+            color: var(--maroon);
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .action-description {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Refund Request Form */
+        .refund-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: var(--maroon);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--maroon);
+            outline: none;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--maroon);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #5a1519;
+        }
+
+        .btn-secondary {
+            background-color: var(--gold);
+            color: var(--maroon);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0a800;
+        }
+
+        /* Refund History */
+        .history-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        .refund-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .refund-table th {
+            background-color: #f5f5f5;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--maroon);
+            border-bottom: 2px solid #eee;
+        }
+
+        .refund-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .refund-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .refund-type {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .type-shares {
+            background-color: rgba(122, 31, 35, 0.1);
+            color: var(--maroon);
+        }
+
+        .type-deposits {
+            background-color: rgba(245, 184, 0, 0.1);
+            color: var(--brown-gray);
+        }
+
+        .type-overpayment {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: #FF9800;
+        }
+
+        .status-approved {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+
+        .status-rejected {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: #F44336;
+        }
+
+        .status-completed {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        /* Financial Reports */
+        .reports-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .report-card {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .report-card:hover {
+            border-color: var(--maroon);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .report-icon {
+            font-size: 24px;
+            color: var(--maroon);
+            margin-bottom: 10px;
+        }
+
+        .report-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .report-description {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar .logo-text, .sidebar .nav-text {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .refunds-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .balance-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-icon">U</div>
+                <div class="logo-text">USHURU <span>INVESTMENT</span></div>
+            </div>
+        </div>
+        
+        <ul class="nav-links">
+            <li>
+                <a href="dashboard.html">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="profile.html">
+                    <i class="fas fa-user"></i>
+                    <span class="nav-text">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="contributions.html">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span class="nav-text">Contributions</span>
+                </a>
+            </li>
+            <li>
+                <a href="investments.html">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="nav-text">Investments</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="refunds.html">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span class="nav-text">Refunds</span>
+                </a>
+            </li>
+            <li>
+                <a href="communication.html">
+                    <i class="fas fa-comments"></i>
+                    <span class="nav-text">Communication</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="login.html">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Refunds & Financial Operations</h1>
+            <div class="user-info">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">2</span>
+                </div>
+                <div class="user-avatar">JM</div>
+                <span>John Member</span>
+            </div>
+        </div>
+
+        <!-- Refund Balances -->
+        <div class="refunds-container">
+            <div class="refund-card">
+                <div class="card-header">
+                    <div class="card-title">Available for Refund</div>
+                    <div class="card-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div>
+                <div class="balance-grid">
+                    <div class="balance-item">
+                        <div class="balance-label">Shares</div>
+                        <div class="balance-value">KSh 45,000</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-label">Deposits</div>
+                        <div class="balance-value">KSh 25,000</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-label">Overpayments</div>
+                        <div class="balance-value">KSh 3,250</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-label">Total Available</div>
+                        <div class="balance-value">KSh 73,250</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="refund-card">
+                <div class="card-header">
+                    <div class="card-title">Refund Status</div>
+                    <div class="card-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                </div>
+                <div class="balance-grid">
+                    <div class="balance-item">
+                        <div class="balance-label">Pending Requests</div>
+                        <div class="balance-value">2</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-label">Approved</div>
+                        <div class="balance-value">5</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-label">Total Processed</div>
+                        <div class="balance-value">KSh 156,800</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-label">Avg. Processing</div>
+                        <div class="balance-value">7-10 days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card" onclick="openRefundRequest()">
+                <div class="action-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div class="action-title">Request Refund</div>
+                <div class="action-description">Submit new refund request</div>
+            </div>
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-receipt"></i>
+                </div>
+                <div class="action-title">Download Receipts</div>
+                <div class="action-description">Get transaction confirmations</div>
+            </div>
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="action-title">Financial Reports</div>
+                <div class="action-description">Generate custom reports</div>
+            </div>
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <div class="action-title">Refund History</div>
+                <div class="action-description">View past refund requests</div>
+            </div>
+        </div>
+
+        <!-- Refund Request Form -->
+        <div class="refund-section">
+            <div class="section-header">
+                <h3 class="section-title">Request Refund</h3>
+            </div>
+            
+            <form id="refundForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Refund Type *</label>
+                        <select class="form-select" required>
+                            <option value="">Select refund type</option>
+                            <option value="shares">Shares Refund</option>
+                            <option value="deposits">Deposits Refund</option>
+                            <option value="overpayment">Overpayment Refund</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount (KSh) *</label>
+                        <input type="number" class="form-input" placeholder="Enter amount" required min="1">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Bank Details</label>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder="Bank Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder="Account Number">
+                        </div>
+                    </div>
+                    <div class="form-note">If not provided, refund will be processed to your default account</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Reason for Refund *</label>
+                    <textarea class="form-textarea" placeholder="Please provide details for your refund request..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Supporting Documents</label>
+                    <input type="file" class="form-input" multiple>
+                    <div class="form-note">You can upload multiple documents (PDF, JPG, PNG). Max 10MB total.</div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Submit Refund Request
+                    </button>
+                    <button type="reset" class="btn btn-secondary" style="margin-left: 10px;">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Refund History -->
+        <div class="history-section">
+            <div class="section-header">
+                <h3 class="section-title">Refund History</h3>
+                <div>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Export History
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="refund-table">
+                    <thead>
+                        <tr>
+                            <th>Request Date</th>
+                            <th>Refund ID</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>15 Sep 2023</td>
+                            <td>REF-2023-0456</td>
+                            <td><span class="refund-type type-shares">Shares</span></td>
+                            <td class="amount">KSh 25,000</td>
+                            <td><span class="status-badge status-pending">Pending Review</span></td>
+                            <td>
+                                <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>02 Aug 2023</td>
+                            <td>REF-2023-0389</td>
+                            <td><span class="refund-type type-deposits">Deposits</span></td>
+                            <td class="amount">KSh 15,000</td>
+                            <td><span class="status-badge status-approved">Approved</span></td>
+                            <td>
+                                <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;">
+                                    <i class="fas fa-receipt"></i> Receipt
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>15 Jun 2023</td>
+                            <td>REF-2023-0256</td>
+                            <td><span class="refund-type type-overpayment">Overpayment</span></td>
+                            <td class="amount">KSh 3,250</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                            <td>
+                                <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;">
+                                    <i class="fas fa-receipt"></i> Receipt
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>10 Mar 2023</td>
+                            <td>REF-2023-0156</td>
+                            <td><span class="refund-type type-shares">Shares</span></td>
+                            <td class="amount">KSh 50,000</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                            <td>
+                                <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;">
+                                    <i class="fas fa-receipt"></i> Receipt
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Financial Reports -->
+        <div class="reports-section">
+            <div class="section-header">
+                <h3 class="section-title">Financial Reports</h3>
+                <div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-cog"></i> Custom Report
+                    </button>
+                </div>
+            </div>
+            
+            <div class="reports-grid">
+                <div class="report-card">
+                    <div class="report-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <div class="report-title">Contribution Statement</div>
+                    <div class="report-description">Detailed contribution history and balances</div>
+                    <button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+                
+                <div class="report-card">
+                    <div class="report-icon">
+                        <i class="fas fa-money-check"></i>
+                    </div>
+                    <div class="report-title">Dividend Slip</div>
+                    <div class="report-description">Current year dividend earnings</div>
+                    <button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+                
+                <div class="report-card">
+                    <div class="report-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="report-title">Loan Balance</div>
+                    <div class="report-description">Outstanding loan amounts and repayment</div>
+                    <button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+                
+                <div class="report-card">
+                    <div class="report-icon">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <div class="report-title">Transaction History</div>
+                    <div class="report-description">Complete transaction records</div>
+                    <button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple script for sidebar navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-links li');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    navItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                });
+            });
+
+            // Refund form submission
+            document.getElementById('refundForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Refund request submitted successfully! You will receive a confirmation email shortly.');
+                this.reset();
+            });
+
+            // Quick action cards functionality
+            const actionCards = document.querySelectorAll('.action-card');
+            actionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('.action-title').textContent;
+                    if (title !== 'Request Refund') {
+                        alert(`Action: ${title} - This would open the respective functionality`);
+                    }
+                });
+            });
+        });
+
+        function openRefundRequest() {
+            document.getElementById('refundForm').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

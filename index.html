@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ushuru Investment Co-operative - Members Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --maroon: #7A1F23;
+            --gold: #F5B800;
+            --brown-gray: #6C3F33;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+        }
+
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .login-left {
+            flex: 1;
+            background: linear-gradient(to bottom right, var(--maroon), #5a1519);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            padding: 40px;
+        }
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .login-logo-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--maroon);
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .login-logo-text {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .login-logo-text span {
+            color: var(--gold);
+        }
+
+        .login-tagline {
+            font-size: 18px;
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .login-features {
+            max-width: 500px;
+        }
+
+        .login-feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .login-feature i {
+            color: var(--gold);
+            font-size: 20px;
+        }
+
+        .login-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-title {
+            font-size: 28px;
+            color: var(--maroon);
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--maroon);
+            outline: none;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .forgot-password {
+            color: var(--maroon);
+            text-decoration: none;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--maroon);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #5a1519;
+        }
+
+        .btn-secondary {
+            background-color: var(--gold);
+            color: var(--maroon);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0a800;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .form-footer a {
+            color: var(--maroon);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .login-left {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-left">
+            <div class="login-logo">
+                <div class="login-logo-icon">U</div>
+                <div class="login-logo-text">USHURU <span>INVESTMENT</span></div>
+            </div>
+            <div class="login-tagline">
+                Members Portal - Manage your investments, track contributions, and communicate with the society in real-time
+            </div>
+            <div class="login-features">
+                <div class="login-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure access with Two-Factor Authentication</span>
+                </div>
+                <div class="login-feature">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Real-time investment tracking and management</span>
+                </div>
+                <div class="login-feature">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Online document submission and approval</span>
+                </div>
+                <div class="login-feature">
+                    <i class="fas fa-comments"></i>
+                    <span>Direct communication with society management</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-right">
+            <div class="login-form">
+                <h2 class="form-title">Member Login</h2>
+                <p class="form-subtitle">Access your investment portal</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">Username or Member ID</label>
+                        <input type="text" class="form-input" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Login to Portal</button>
+                    
+                    <div class="form-footer">
+                        New member? <a href="#">Register here</a>
+                    </div>
+                </form>
+                
+                <div style="margin-top: 30px; padding: 20px; background-color: #f9f9f9; border-radius: 6px;">
+                    <p style="font-size: 14px; color: #666; margin-bottom: 10px;"><strong>Demo Credentials:</strong></p>
+                    <p style="font-size: 12px; color: #888;">Username: demo@ushuru.co.ke</p>
+                    <p style="font-size: 12px; color: #888;">Password: demo123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
